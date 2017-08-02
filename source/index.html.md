@@ -60,7 +60,7 @@ Content-Type: application/json
 
 This endpoint returns a list of all the categories with their products.
 
-`POST /api/products`
+`GET /api/products`
 
 > Returns the following structure:
 
@@ -127,6 +127,10 @@ Returns all the scripts.
 
 Returns all the constants that are required to calculate the price.
 
+`GET /api/constants`
+
+> Returns the following structure:
+
 ```json
 {
   "hourly_wage_drive": 10, // in euro
@@ -142,8 +146,11 @@ Returns all the quantity discounts.
 
 The dicount applies if following formula applies:
 
-`min < x <= max`
+`min < x < max`
 
+`GET /api/discounts`
+
+> Returns the following structure:
 
 ```json
 [
