@@ -292,7 +292,7 @@ Content-Type: application/json
 </span></code></pre><h1 id='products'>Products</h1>
 <p>This endpoint returns a list of all the categories with their products.</p>
 
-<p><code>POST /api/products</code></p>
+<p><code>GET /api/products</code></p>
 
 <blockquote>
 <p>Returns the following structure:</p>
@@ -352,6 +352,12 @@ Content-Type: application/json
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h1 id='constants'>Constants</h1>
 <p>Returns all the constants that are required to calculate the price.</p>
+
+<p><code>GET /api/constants</code></p>
+
+<blockquote>
+<p>Returns the following structure:</p>
+</blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"hourly_wage_drive"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">euro</span><span class="w">
   </span><span class="s2">"hourly_wage_work"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">euro</span><span class="w">
@@ -362,7 +368,13 @@ Content-Type: application/json
 
 <p>The dicount applies if following formula applies:</p>
 
-<p><code>min &lt; x &lt;= max</code></p>
+<p><code>min &lt; x &lt; max</code></p>
+
+<p><code>GET /api/discounts</code></p>
+
+<blockquote>
+<p>Returns the following structure:</p>
+</blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="s2">"min"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">euro</span><span class="w">
