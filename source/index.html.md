@@ -9,7 +9,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 toc_footers:
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
- includes:
+ # includes:
   # - errors 
 
 search: true
@@ -71,7 +71,7 @@ This endpoint returns a list of all the categories with their products.
     "products": [
       {
         "name": "Sessel",
-        ...
+        ... // TODO: add all fields
       }
     ]
   }
@@ -81,16 +81,6 @@ This endpoint returns a list of all the categories with their products.
 # Location
 
 This endpoint calculates which location is the nearest to the customer.
-
-> Returns the following structure:
-
-```json
-{
-  "city": "Stuttgart",
-  "distance": 3, // in km
-  "duration": 7 // in minutes
-}
-```
 
 If the location could not be found return an HTTP Status Code of `400`.
 
@@ -103,6 +93,20 @@ If the location could not be found return an HTTP Status Code of `400`.
 Parameter | Required | Description
 --------- | -------- | -----------
 zip       | yes      | The zip code of the customer.
+
+> Example Request:
+
+`GET /api/location?zip=70173`
+
+> Returns the following structure:
+
+```json
+{
+  "city": "Stuttgart",
+  "distance": 3, // in km
+  "duration": 7 // in minutes
+}
+```
 
 
 # Scripts
@@ -135,7 +139,7 @@ Returns all the constants that are required to calculate the price.
 {
   "hourly_wage_drive": 10, // in euro
   "hourly_wage_work": 16 // in euro
-  ...
+  ... // TODO: add all constants
 }
 ```
 
@@ -161,6 +165,58 @@ The dicount applies if following formula applies:
   }
 ]
 ```
+
+# Saved Contracts
+
+## POST
+
+Inserts the Contract into the DB.
+
+### HTTP Request
+
+`POST /api/contract`
+
+> Returns the following structure:
+
+```json
+{
+  "id": "xyz-123-XYZ"
+}
+```
+
+
+## GET
+
+Gets all the contracts from the database.
+
+### HTTP Request
+
+`GET /api/contracts`
+
+### Query Parameters
+
+Parameter | Required | Description
+--------- | -------- | -----------
+zip       | yes      | The zip code of the customer.
+name      | yes      | The full name of the customer.
+
+
+
+> Returns the following structure:
+
+```json
+[
+  {
+    "id": "xyz-123-XYZ",
+    "inserted_at": 1501693511547,
+    "employee": "Marc Petersmann",
+    "data": {
+      // anything! - follows the schema of the frontend
+    }
+  }
+]
+```
+
 
 # HTTP Codes
 
