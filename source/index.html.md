@@ -26,6 +26,10 @@ All the endpoints/parameters/variables/... are in english.
 
 We protect the API Endpoints with a [JWT Token](https://jwt.io/). The token needs to be provided to every request or the HTTP Status Code `401` is returned. On the server we use [Flask-JWT](https://pythonhosted.org/Flask-JWT/)?
 
+
+Header: `Authorization: Bearer eyJhbGc...`
+
+
 <aside class="notice">
 You <strong>must</strong> provide a JWT Token to get data.
 </aside>
@@ -71,7 +75,12 @@ This endpoint returns a list of all the categories with their products.
     "products": [
       {
         "name": "Sessel",
-        ... // TODO: add all fields
+        "single_price_net": 41.18,
+        "single_price_gross": 49.0,
+        "single_time": 45,
+
+        "has_option_qm": false,
+        "has_option_removable_pillows": true
       }
     ]
   }
@@ -103,8 +112,8 @@ zip       | yes      | The zip code of the customer.
 ```json
 {
   "city": "Stuttgart",
-  "distance": 3, // in km
-  "duration": 7 // in minutes
+  "driving_distance": 3, // in km
+  "driving_duration": 7 // in minutes
 }
 ```
 
@@ -137,9 +146,16 @@ Returns all the constants that are required to calculate the price.
 
 ```json
 {
-  "hourly_wage_drive": 10, // in euro
-  "hourly_wage_work": 16 // in euro
-  ... // TODO: add all constants
+  "wage_ride": 10, // all in euro
+  "wage_work": 15,
+
+  "flat_rate_extra_work": 5,
+  "flat_rate_cleaning_supplies": 15,
+
+  "cost_per_order": 45,
+  "price_per_kilometer": 0.16,
+
+  "minimum_margin": 0.05 // 5%
 }
 ```
 
@@ -150,7 +166,7 @@ Returns all the quantity discounts.
 
 The dicount applies if following formula applies:
 
-`min < x < max`
+`if (min < price < max) price = price - discount`
 
 `GET /api/discounts`
 
@@ -175,6 +191,34 @@ Inserts the Contract into the DB.
 ### HTTP Request
 
 `POST /api/contract`
+
+> POST the following structure
+
+```json
+{
+  "name": "Name",
+  "zip": 12345,
+  "objects": [
+    {
+      "name": "Sessel",
+      "single_price_net": 41.18,
+      "single_price_gross": 49.0,
+      "single_time": 45,
+      "qm": 10,
+      "removable_pillows_small": false,
+      "removable_pillows_large": false
+      // possibly even more
+    },
+    // ...
+  ],
+  "note": "note",
+
+  "driving_duration": 1,
+  "driving_distance": 1,
+  "negotiated_price": 409.87,
+  // possibly even more (city, employee)
+}
+```
 
 > Returns the following structure:
 
@@ -209,9 +253,9 @@ name      | yes      | The full name of the customer.
   {
     "id": "xyz-123-XYZ",
     "inserted_at": 1501693511547,
-    "employee": "Marc Petersmann",
     "data": {
-      // anything! - follows the schema of the frontend
+      // follows the schema of the frontend
+      // -> see `POST /api/contract`
     }
   }
 ]
